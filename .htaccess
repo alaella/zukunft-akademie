@@ -1,0 +1,13 @@
+
+AddDefaultCharset windows-1251
+RewriteEngine On
+# редирект HTTP -> HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# (необов'язково) канонічний редирект на без www:
+# RewriteCond %{HTTP_HOST} ^www\.zukunft-akademie\.de$ [NC]
+# RewriteRule ^ https://zukunft-akademie.de%{REQUEST_URI} [L,R=301]
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+# весь код, що йде зверху доданий згідно рекомендацій для безпеки описаних тут https://chatgpt.com/c/68f6492b-6510-8326-950d-5e1128f72ce1

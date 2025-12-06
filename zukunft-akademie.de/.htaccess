@@ -1,0 +1,28 @@
+
+# БЛОК_1 весь код, що йде в цьому блоці доданий згідно рекомендацій для безпеки описаних тут https://chatgpt.com/c/68f6492b-6510-8326-950d-5e1128f72ce1
+
+AddDefaultCharset windows-1251
+RewriteEngine On
+# редирект HTTP -> HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# (необов'язково) канонічний редирект на без www:
+# RewriteCond %{HTTP_HOST} ^www\.zukunft-akademie\.de$ [NC]
+# RewriteRule ^ https://zukunft-akademie.de%{REQUEST_URI} [L,R=301]
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+
+
+
+
+# БЛОК_2 - Це пропопнував чат gpt щодо ssl сертифікатів 
+RewriteEngine On
+
+# 1) спочатку просто HTTPS на поточний хост (без зміни на www)
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# 2) (необов'язково) якщо хочеш ОДНУ канонічну адресу — краще БЕЗ www
+RewriteCond %{HTTP_HOST} ^www\.zukunft-akademie\.de$ [NC]
+RewriteRule ^ https://zukunft-akademie.de%{REQUEST_URI} [R=301,L]
